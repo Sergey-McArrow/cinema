@@ -1,0 +1,26 @@
+.movies {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  margin-top: 2rem;
+}
+
+.card {
+  outline: 1px solid #fff;
+  background: none !important;
+  color: bisque !important;
+  #card-image {
+    max-width: fit-content;
+    margin: 0 auto;
+    height: 27rem;
+  }
+  p {
+    color: bisque;
+    text-transform: capitalize;
+    letter-spacing: 0.09rem;
+  }
+  .button-container {
+    color: #e3f2fd;
+  }
+}
