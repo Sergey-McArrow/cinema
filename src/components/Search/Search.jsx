@@ -3,10 +3,11 @@ import React, { Component } from 'react';
 import './search.scss';
 
 class Search extends Component {
-  state = { search: '', type: 'all' };
+  state = { search: 'matrix', type: 'all' };
 
   handleKeydown = e => {
-    if (e.key === 'Enter') this.props.searchMovies(this.state.search);
+    if (e.key === 'Enter')
+      this.props.searchMovies(this.state.search, this.state.type);
   };
 
   handleFilter = e => {
@@ -24,18 +25,17 @@ class Search extends Component {
         <div className='input-field'>
           <input
             value={this.state.search}
-            id='first_name2'
             type='text'
-            className='validate'
+            className='validate white-text'
             onChange={e => this.setState({ search: e.target.value })}
             onKeyDown={this.handleKeydown}
           />
-          <label className='active'>Search</label>
+          <label className='active white-text'>Search</label>
           <button
             className='btn search-btn'
             onClick={() => {
               if (this.state.search !== '')
-                this.props.searchMovies(this.state.search);
+                this.props.searchMovies(this.state.search, this.state.type);
             }}
           >
             Search

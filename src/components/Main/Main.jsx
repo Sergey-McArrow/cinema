@@ -1,21 +1,27 @@
 import React, { Component } from 'react';
 
+import './main.scss';
 import { Movies } from '../Movies/Movies';
 import { Search } from '../Search/Search';
-import './main.scss';
+import { Preloader } from '../Preloader/Preloader';
+import { Footer } from '../Footer/Footer';
+import { Header } from '../Header/Header';
+import { InfoModal } from '../InfoModal/InfoModal';
 
 const API_KEY = '1d717560';
 // process.env.REACT_APP_API_KEY;
-const requestAdress = `http://www.omdbapi.com/?i=tt3896198&apikey=${API_KEY}&s=`;
 
 class Main extends Component {
   state = {
     movies: [],
     loading: true,
+    favorite: [],
+    info: '',
+    showInfo: false,
   };
 
   componentDidMount() {
-    fetch(requestAdress + 'iron')
+    fetch(`https://www.omdbapi.com/?apikey=${API_KEY}&s=matrix`)
       .then(res => res.json())
       .then(data => {
         this.setState({ movies: data.Search, loading: false });
@@ -25,10 +31,14 @@ class Main extends Component {
         this.setState({ loading: false });
       });
   }
-  //TODO: fix type search
+
   searchMovies = (str, type = 'all') => {
     this.setState({ loading: true });
-    fetch(`${requestAdress}${str}${type !== 'all' ? `&type=${type}` : ''}`)
+    fetch(
+      `https://www.omdbapi.com/?apikey=${API_KEY}&s=${str}${
+        type !== 'all' ? `&type=${type}` : ''
+      }`
+    )
       .then(response => response.json())
       .then(data => this.setState({ movies: data.Search, loading: false }))
       .catch(err => {
@@ -37,15 +47,58 @@ class Main extends Component {
       });
   };
 
+  addFavorite = item => {
+    this.setState({
+      favorite: [...this.state.favorite, item],
+    });
+  };
+
+  getMoreInfo = item => {
+    fetch(
+      `http://www.omdbapi.com/?apikey=${API_KEY}&i=${item.imdbID}&plot=full
+      `
+    )
+      .then(response => response.json())
+      .then(data => this.setState({ info: data.Plot, loading: false }))
+      .catch(err => {
+        console.error(err);
+        this.setState({ loading: false });
+      });
+  };
+  handleClick = () => {
+    this.setState({ showInfo: !this.state.showInfo });
+  };
+
+  showMoreInfo = item => {
+    this.getMoreInfo(item);
+    this.setState({ showInfo: !this.state.showInfo });
+  };
+
   render() {
-    const { movies, loading } = this.state;
+    const { movies, loading, showInfo } = this.state;
     return (
-      <div className='main-container container'>
-        <Search searchMovies={this.searchMovies} />
-        {!loading ? <Movies movies={movies} /> : <h2>Loading...</h2>}
-      </div>
+      <>
+        <Header favorite={this.state.favorite} />
+        {showInfo && (
+          <InfoModal info={this.state.info} isClicked={this.handleClick} />
+        )}
+        <div className='main-container container'>
+          <Search searchMovies={this.searchMovies} />
+          {loading ? (
+            <Preloader />
+          ) : (
+            <Movies
+              movies={movies}
+              addFavorite={this.addFavorite}
+              showMoreInfo={this.showMoreInfo}
+            />
+          )}
+        </div>
+
+        <Footer />
+      </>
     );
   }
 }
 
-export default Main;
+export { Main };

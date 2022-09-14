@@ -1,10 +1,16 @@
 .search-btn {
   position: absolute;
   top: 0;
-  right: 1rem;
   background: #000;
+  height: 3rem;
 }
 .radio-input {
   display: flex;
   justify-content: space-around;
+}
+input {
+  text-transform: capitalize;
+}
+.input-field {
+  margin-top: 2rem;
 }
