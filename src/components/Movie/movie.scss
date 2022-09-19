@@ -20,6 +20,9 @@ img {
   max-width: 20rem;
   .card-content {
     width: 100%;
+    p {
+      margin: 1vh 1vw;
+    }
     .card-title {
       color: bisque !important ;
       text-align: center;

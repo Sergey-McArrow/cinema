@@ -7,6 +7,8 @@ import { Preloader } from '../Preloader/Preloader';
 import { Footer } from '../Footer/Footer';
 import { Header } from '../Header/Header';
 import { InfoModal } from '../InfoModal/InfoModal';
+import { Container } from '@mui/material';
+import { getStartScreenData } from '../../api';
 
 const API_KEY = '1d717560';
 // process.env.REACT_APP_API_KEY;
@@ -78,11 +80,16 @@ class Main extends Component {
     const { movies, loading, showInfo } = this.state;
     return (
       <>
-        <Header favorite={this.state.favorite} />
         {showInfo && (
-          <InfoModal info={this.state.info} isClicked={this.handleClick} />
+          <InfoModal
+            info={this.state.info}
+            isClicked={this.handleClick}
+            isShowing={showInfo}
+            isLoading={loading}
+          />
         )}
-        <div className='main-container container'>
+        <Header favorite={this.state.favorite} />
+        <Container>
           <Search searchMovies={this.searchMovies} />
           {loading ? (
             <Preloader />
@@ -93,8 +100,7 @@ class Main extends Component {
               showMoreInfo={this.showMoreInfo}
             />
           )}
-        </div>
-
+        </Container>
         <Footer />
       </>
     );
