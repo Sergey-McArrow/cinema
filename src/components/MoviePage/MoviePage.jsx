@@ -11,7 +11,7 @@ import { getFullInfo } from '../../api';
 import { Box } from '@mui/system';
 
 const MoviePage = () => {
-  const [movie, setMovie] = useState(null);
+  const [movie, setMovie] = useState({});
   const { id } = useParams();
 
   useEffect(() => {
