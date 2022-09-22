@@ -1,30 +1,43 @@
 import React, { Component } from 'react';
+import * as _ from 'lodash';
 
 import './main.scss';
 import { Movies } from '../Movies/Movies';
 import { Search } from '../Search/Search';
-import { Preloader } from '../Preloader/Preloader';
 import { Footer } from '../Footer/Footer';
 import { Header } from '../Header/Header';
 import { InfoModal } from '../InfoModal/InfoModal';
-import { Container } from '@mui/material';
+import { Container, LinearProgress } from '@mui/material';
 import { getStartScreenData } from '../../api';
 
 const API_KEY = '1d717560';
 // process.env.REACT_APP_API_KEY;
 
 class Main extends Component {
-  state = {
-    movies: [],
-    loading: true,
-    favorite: [],
-    info: '',
-    showInfo: false,
-  };
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      movies: [],
+      loading: true,
+      favorite: [],
+      info: '',
+      showInfo: false,
+    };
+  }
 
   componentDidMount() {
-    fetch(`https://www.omdbapi.com/?apikey=${API_KEY}&s=matrix`)
-      .then(res => res.json())
+    // fetch(`https://www.omdbapi.com/?apikey=${API_KEY}&s=matrix`)
+    //   .then(res => res.json())
+    //   .then(data => {
+    //     this.setState({ movies: data.Search, loading: false });
+    //   })
+    //   .catch(err => {
+    //     console.error(err);
+    //     this.setState({ loading: false });
+    //   });
+    let data = getStartScreenData();
+    data
       .then(data => {
         this.setState({ movies: data.Search, loading: false });
       })
@@ -51,13 +64,20 @@ class Main extends Component {
 
   addFavorite = item => {
     this.setState({
-      favorite: [...this.state.favorite, item],
+      favorite: _.uniqBy([...this.state.favorite, item], 'imdbID'),
     });
   };
 
-  getMoreInfo = item => {
+  removeFavorite = item => {
+    this.setState({
+      favorite: this.state.favorite.filter(f => f.imdbID !== item.imdbID),
+    });
+  };
+
+  getMoreInfo = ({ imdbID }) => {
+    this.setState({ info: '' });
     fetch(
-      `http://www.omdbapi.com/?apikey=${API_KEY}&i=${item.imdbID}&plot=full
+      `http://www.omdbapi.com/?apikey=${API_KEY}&i=${imdbID}&plot=full
       `
     )
       .then(response => response.json())
@@ -88,11 +108,14 @@ class Main extends Component {
             isLoading={loading}
           />
         )}
-        <Header favorite={this.state.favorite} />
+        <Header
+          favorite={this.state.favorite}
+          removeFavorite={this.removeFavorite}
+        />
         <Container>
           <Search searchMovies={this.searchMovies} />
           {loading ? (
-            <Preloader />
+            <LinearProgress />
           ) : (
             <Movies
               movies={movies}

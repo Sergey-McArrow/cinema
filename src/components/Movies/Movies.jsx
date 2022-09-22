@@ -10,7 +10,6 @@ const Movies = props => {
           <Movie
             key={movie.imdbID}
             {...movie}
-            item={movie}
             addFavorite={addFavorite}
             showMoreInfo={showMoreInfo}
           />
