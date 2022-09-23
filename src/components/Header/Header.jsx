@@ -28,11 +28,13 @@ const Header = props => {
     );
   };
 
+  const matches = useMediaQuery('(min-width:700px)');
+
   return (
     <AppBar
       sx={{
         position: 'static',
-        flexDirection: 'row',
+        flexDirection: `${matches ? 'row' : 'column'}`,
         justifyContent: 'space-around',
         background: '#cfd8dc',
         alignItems: 'center',
@@ -43,19 +45,20 @@ const Header = props => {
         href='https://github.com/Sergey-McArrow/cinema'
         target='_blank'
         rel='noreferrer'
-        sx={{ m: 1, pr: 20 }}
+        sx={{ m: 1 }}
       >
         <MovieTwoToneIcon />
         <Typography sx={{ color: '#263238', m: 1 }} variant='h4'>
           Cinema
         </Typography>
       </Button>
-      <Box>
+      <Box sx={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center' }}>
         <Button
           variant='contained'
           sx={{
             background: '#2bbbad',
             m: 1,
+            minWidth: '157px',
           }}
           onClick={() => setOpenFavorite((favoriteOpen = !favoriteOpen))}
         >
@@ -65,7 +68,7 @@ const Header = props => {
         </Button>
         <Button
           variant='contained'
-          sx={{ background: '#2bbbad', m: 1 }}
+          sx={{ background: '#2bbbad', m: 1, minWidth: '157px' }}
           href='https://send.monobank.ua/8NMUeoTYQV'
           target='_blank'
           rel='noreferrer'

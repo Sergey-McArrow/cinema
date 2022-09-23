@@ -6,6 +6,7 @@ import {
   Divider,
   ImageListItem,
   Typography,
+  useMediaQuery,
 } from '@mui/material';
 import { getFullInfo } from '../../api';
 import { Box } from '@mui/system';
@@ -19,13 +20,17 @@ const MoviePage = () => {
       .then(data => setMovie(data))
       .catch(err => console.error(err));
   }, [id]);
-  console.log(movie);
+
+  const matches = useMediaQuery('(min-width:700px)');
   const { Title, Actors, Awards, Country, Genre, Plot, Poster } = movie;
+
   return (
     <>
       {movie && (
         <Container
           sx={{
+            display: 'flex',
+            flexDirection: 'column',
             color: '#eceff1 ',
           }}
         >
@@ -41,6 +46,7 @@ const MoviePage = () => {
             sx={{
               display: 'flex',
               alignItems: 'center',
+              flexDirection: `${matches ? 'row' : 'column'}`,
             }}
           >
             <ImageListItem sx={{ borderRadius: '15px', mt: 3, ml: 5, flex: 2 }}>

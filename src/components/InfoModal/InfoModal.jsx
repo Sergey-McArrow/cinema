@@ -1,21 +1,25 @@
 import React from 'react';
-import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
-import Modal from '@mui/material/Modal';
 import { Close } from '@mui/icons-material';
-import { ClickAwayListener } from '@mui/material';
-import { Preloader } from '../Preloader/Preloader';
+import {
+  Box,
+  Typography,
+  Modal,
+  ClickAwayListener,
+  LinearProgress,
+  useMediaQuery,
+} from '@mui/material';
 
 const style = {
   position: 'absolute',
   top: '50%',
   left: '50%',
   transform: 'translate(-50%, -50%)',
-  width: '50vw',
+  width: '70vw',
   bgcolor: 'background.paper',
   border: '2px solid #000',
   boxShadow: 24,
-  p: 4,
+  borderRadius: '12px',
+  p: 2,
 };
 
 const InfoModal = ({ isClicked, info, isShowing, loading, clearInfo }) => {
@@ -25,6 +29,7 @@ const InfoModal = ({ isClicked, info, isShowing, loading, clearInfo }) => {
   const handleClickAway = () => {
     isClicked(false);
   };
+  const matches = useMediaQuery('(min-width:700px)');
 
   return (
     <Modal
@@ -36,14 +41,17 @@ const InfoModal = ({ isClicked, info, isShowing, loading, clearInfo }) => {
         <ClickAwayListener onClickAway={handleClickAway}>
           {isShowing &&
             (loading ? (
-              <Preloader />
+              <LinearProgress />
             ) : (
               <Box sx={style}>
                 <Close onClick={handleButtonClick} style={{ float: 'right' }} />
                 <Typography id='modal-modal-title' variant='h6' component='h2'>
                   More info
                 </Typography>
-                <Typography id='modal-modal-description' sx={{ mt: 2 }}>
+                <Typography
+                  id='modal-modal-description'
+                  sx={{ mt: 2, fontSize: `${matches ? '1.5rem' : '.7rem'}` }}
+                >
                   {info}
                 </Typography>
               </Box>

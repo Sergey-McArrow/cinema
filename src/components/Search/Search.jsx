@@ -64,7 +64,7 @@ class Search extends Component {
                 onChange={this.handleFilter}
                 checked={this.state.type === 'movie'}
               />
-              <span>Movies only</span>
+              <span>Movies</span>
             </label>
             <label>
               <input
@@ -75,7 +75,7 @@ class Search extends Component {
                 onChange={this.handleFilter}
                 checked={this.state.type === 'series'}
               />
-              <span>Series Only</span>
+              <span>Series</span>
             </label>
           </div>
         </div>

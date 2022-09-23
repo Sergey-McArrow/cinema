@@ -13,10 +13,8 @@ const getStartScreenData = async () => {
 };
 
 const getFullInfo = async id => {
-  console.log(`http://www.omdbapi.com/?apikey=${API_KEY}&i=${id}&plot=full
-  `);
   const data = await fetch(
-    `http://www.omdbapi.com/?apikey=${API_KEY}&i=${id}&plot=full
+    `https://www.omdbapi.com/?apikey=${API_KEY}&i=${id}&plot=full
     `
   )
     .then(res => res.json())
@@ -24,8 +22,34 @@ const getFullInfo = async id => {
     .catch(err => {
       console.error(err);
     });
-  // console.log(data);
   return data;
 };
 
-export { getStartScreenData, getFullInfo };
+const movieSearch = async (str, type) => {
+  const data = await fetch(
+    `https://www.omdbapi.com/?apikey=${API_KEY}&s=${str}${
+      type !== 'all' ? `&type=${type}` : ''
+    }`
+  )
+    .then(response => response.json())
+    .then(data => data)
+    .catch(err => {
+      console.error(err);
+    });
+  return data;
+};
+
+const fetchMoreInfo = async id => {
+  const data = await fetch(
+    `https://www.omdbapi.com/?apikey=${API_KEY}&i=${id}&plot=full
+    `
+  )
+    .then(response => response.json())
+    .then(data => data)
+    .catch(err => {
+      console.error(err);
+    });
+  return data;
+};
+
+export { getStartScreenData, getFullInfo, movieSearch, fetchMoreInfo };
