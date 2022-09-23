@@ -1,0 +1,22 @@
+.search-btn {
+  position: absolute;
+  top: 0;
+  background: #000;
+  height: 3rem;
+}
+.radio-input {
+  display: flex;
+  justify-content: space-evenly;
+}
+input {
+  text-transform: capitalize;
+}
+.input-field {
+  margin-top: 2rem;
+}
+@media only screen and (max-width: 501px) {
+  .radio-input {
+    flex-direction: column;
+    padding-left: 40%;
+  }
+}

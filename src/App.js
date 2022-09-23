@@ -1,24 +1,18 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState } from 'react';
+import { Routes, Route } from 'react-router-dom';
+
+import { Greeting } from './components/Greeting/Greeting';
+import { Main } from './components/Main/Main';
+import { MoviePage } from './components/MoviePage/MoviePage';
 
 function App() {
+  const [input, getInput] = useState('');
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Routes>
+      <Route path='/' element={<Greeting getInput={getInput} />} />
+      <Route path='/cinema' element={<Main str={input} />} />
+      <Route path='/movie/:id' element={<MoviePage />} />
+    </Routes>
   );
 }
 
