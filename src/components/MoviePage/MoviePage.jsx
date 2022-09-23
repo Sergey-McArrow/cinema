@@ -39,7 +39,7 @@ const MoviePage = () => {
               variant='contained'
               sx={{ float: 'right', mt: 3, background: '#2bbbad' }}
             >
-              GO HOME
+              HOME
             </Button>
           </Link>
           <Box

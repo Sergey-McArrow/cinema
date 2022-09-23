@@ -22,7 +22,7 @@ const style = {
   p: 2,
 };
 
-const InfoModal = ({ isClicked, info, isShowing, loading, clearInfo }) => {
+const InfoModal = ({ isClicked, info, isShowing, isLoading }) => {
   const handleButtonClick = isOpen => {
     isClicked(!isOpen);
   };
@@ -30,7 +30,6 @@ const InfoModal = ({ isClicked, info, isShowing, loading, clearInfo }) => {
     isClicked(false);
   };
   const matches = useMediaQuery('(min-width:700px)');
-
   return (
     <Modal
       open={isShowing}
@@ -39,23 +38,30 @@ const InfoModal = ({ isClicked, info, isShowing, loading, clearInfo }) => {
     >
       <>
         <ClickAwayListener onClickAway={handleClickAway}>
-          {isShowing &&
-            (loading ? (
-              <LinearProgress />
-            ) : (
-              <Box sx={style}>
-                <Close onClick={handleButtonClick} style={{ float: 'right' }} />
-                <Typography id='modal-modal-title' variant='h6' component='h2'>
-                  More info
-                </Typography>
-                <Typography
-                  id='modal-modal-description'
-                  sx={{ mt: 2, fontSize: `${matches ? '1.5rem' : '.7rem'}` }}
-                >
-                  {info}
-                </Typography>
-              </Box>
-            ))}
+          {isShowing && (
+            <Box sx={style}>
+              <Close onClick={handleButtonClick} style={{ float: 'right' }} />
+              {isLoading ? (
+                <LinearProgress />
+              ) : (
+                <>
+                  <Typography
+                    id='modal-modal-title'
+                    variant='h6'
+                    component='h2'
+                  >
+                    More info
+                  </Typography>
+                  <Typography
+                    id='modal-modal-description'
+                    sx={{ mt: 2, fontSize: `${matches ? '1.5rem' : '.7rem'}` }}
+                  >
+                    {info}
+                  </Typography>
+                </>
+              )}
+            </Box>
+          )}
         </ClickAwayListener>
       </>
     </Modal>

@@ -4,11 +4,17 @@ import './search.scss';
 import { Container } from '@mui/material';
 
 class Search extends Component {
-  state = { search: 'matrix', type: 'all' };
+  constructor(props) {
+    super(props);
+    this.searchStr = this.props.searchStr;
+    this.state = { search: this.searchStr || 'matrix', type: 'all' };
+  }
 
   handleKeydown = e => {
-    if (e.key === 'Enter')
+    if (e.key === 'Enter') {
       this.props.searchMovies(this.state.search, this.state.type);
+      localStorage.setItem('search', JSON.stringify(this.state.search));
+    }
   };
 
   handleFilter = e => {

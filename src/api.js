@@ -1,8 +1,8 @@
-const API_KEY = '1d717560';
+const API_KEY = process.env.REACT_APP_KEY;
 
-const getStartScreenData = async () => {
+const getStartScreenData = async (str = 'matrix') => {
   const data = await fetch(
-    `https://www.omdbapi.com/?apikey=${API_KEY}&s=matrix`
+    `https://www.omdbapi.com/?apikey=${API_KEY}&s=${str}`
   )
     .then(res => res.json())
     .then(data => data)

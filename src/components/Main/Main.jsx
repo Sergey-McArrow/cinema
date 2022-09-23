@@ -17,21 +17,35 @@ class Main extends Component {
     this.state = {
       movies: [],
       loading: true,
+      loadingInfo: true,
       favorite: [],
       info: '',
       showInfo: false,
+      searchStr: this.props.str,
     };
   }
 
   componentDidMount() {
-    getStartScreenData()
+    const favorites = localStorage.getItem('favorite');
+    this.setState({ favorite: JSON.parse(favorites) });
+    const search = localStorage.getItem('search');
+    search !== null && this.setState({ searchStr: search });
+    getStartScreenData(this.state.searchStr || 'matrix')
       .then(data => {
-        this.setState({ movies: data.Search, loading: false });
+        this.setState({
+          movies: data.Search,
+          loading: false,
+        });
       })
       .catch(err => {
         console.error(err);
         this.setState({ loading: false });
       });
+  }
+
+  componentDidUpdate() {
+    localStorage.setItem('favorite', JSON.stringify(this.state.favorite));
+    console.log();
   }
 
   searchMovies = (str, type = 'all') => {
@@ -57,12 +71,12 @@ class Main extends Component {
   };
 
   getMoreInfo = ({ imdbID }) => {
-    this.setState({ info: '' });
+    this.setState({ info: '', loadingInfo: true });
     fetchMoreInfo(imdbID)
-      .then(data => this.setState({ info: data.Plot, loading: false }))
+      .then(data => this.setState({ info: data.Plot, loadingInfo: false }))
       .catch(err => {
         console.error(err);
-        this.setState({ loading: false });
+        this.setState({ loadingInfo: false });
       });
   };
 
@@ -76,7 +90,8 @@ class Main extends Component {
   };
 
   render() {
-    const { movies, loading, showInfo } = this.state;
+    const { movies, loading, showInfo, loadingInfo } = this.state;
+
     return (
       <>
         {showInfo && (
@@ -84,7 +99,7 @@ class Main extends Component {
             info={this.state.info}
             isClicked={this.handleClick}
             isShowing={showInfo}
-            isLoading={loading}
+            isLoading={loadingInfo}
           />
         )}
         <Header
@@ -92,7 +107,10 @@ class Main extends Component {
           removeFavorite={this.removeFavorite}
         />
         <Container>
-          <Search searchMovies={this.searchMovies} />
+          <Search
+            searchMovies={this.searchMovies}
+            searchStr={this.state.searchStr}
+          />
           {loading ? (
             <LinearProgress />
           ) : (
