@@ -27,7 +27,7 @@ class Main extends Component {
 
   componentDidMount() {
     const favorites = localStorage.getItem('favorite');
-    this.setState({ favorite: JSON.parse(favorites) });
+    favorites !== null && this.setState({ favorite: JSON.parse(favorites) });
     const search = localStorage.getItem('search');
     search !== null && this.setState({ searchStr: search });
     getStartScreenData(this.state.searchStr || 'matrix')

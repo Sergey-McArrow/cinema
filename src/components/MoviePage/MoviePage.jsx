@@ -34,7 +34,7 @@ const MoviePage = () => {
             color: '#eceff1 ',
           }}
         >
-          <Link to={'/cinema'}>
+          <Link to={'/main'}>
             <Button
               variant='contained'
               sx={{ float: 'right', mt: 3, background: '#2bbbad' }}

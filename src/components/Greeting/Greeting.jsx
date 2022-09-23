@@ -61,12 +61,12 @@ const Greeting = ({ getInput }) => {
                 setInput(e.target.value);
                 getInput(e.target.value);
               }}
-              onKeyDown={e => e.key === 'Enter' && redirect('/cinema')}
+              onKeyDown={e => e.key === 'Enter' && redirect('/main')}
               autoFocus
             />
           </DialogContent>
           <DialogActions>
-            <Link to='/cinema'>
+            <Link to='/main'>
               <Button sx={{ mb: 2 }} variant='contained'>
                 Search
               </Button>
