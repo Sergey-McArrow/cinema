@@ -9,8 +9,8 @@ function App() {
   const [input, getInput] = useState('');
   return (
     <Routes>
-      <Route path='/' element={<Greeting getInput={getInput} />} />
-      <Route path='/cinema' element={<Main str={input} />} />
+      <Route path='/cinema' element={<Greeting getInput={getInput} />} />
+      <Route path='/main' element={<Main str={input} />} />
       <Route path='/movie/:id' element={<MoviePage />} />
     </Routes>
   );

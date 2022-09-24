@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link, redirect } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import {
   Box,
   Button,
@@ -14,8 +14,11 @@ import {
 
 const Greeting = ({ getInput }) => {
   const [input, setInput] = useState('');
-
+  const navigate = useNavigate();
   const matches = useMediaQuery('(min-width:700px)');
+
+  const handleKeydown = (e) => e.key === 'Enter' && navigate('/main')
+
 
   return (
     <>
@@ -61,12 +64,12 @@ const Greeting = ({ getInput }) => {
                 setInput(e.target.value);
                 getInput(e.target.value);
               }}
-              onKeyDown={e => e.key === 'Enter' && redirect('/cinema')}
+              onKeyDown={handleKeydown}
               autoFocus
             />
           </DialogContent>
           <DialogActions>
-            <Link to='/cinema'>
+            <Link to='/main'>
               <Button sx={{ mb: 2 }} variant='contained'>
                 Search
               </Button>
