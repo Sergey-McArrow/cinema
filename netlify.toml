@@ -2,4 +2,4 @@
 from = "/*"
 to = "/"
 status = 200
-headers = {X-From = "Netlify"}
+
