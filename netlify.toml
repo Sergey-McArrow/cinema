@@ -1,5 +1,5 @@
 [[redirects]]
 from = "/*"
-to = "/maim"
+to = "/main"
 status = 200
 headers = {X-From = "Netlify"}
