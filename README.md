@@ -1,7 +1,15 @@
-# I'm Getting Started with Create React App
 
-This is my **_first_** App using create-react-app
+# Cinema
 
-### Here you can search movies and series. After click on poster you get more information about the movies and series. Also you can store _in localstorage_ your favorite movies & series!
+ Here you can search movies and series. After click on poster you get more information about the movies and series. Also you can store in _localstorage_ your favorite movies & series!
 
-In this project I use ReactJs, ReactRouterDOM, NodeSass,Lodash, Dotenv, MaterialUI, Materialize.
+
+## Tech Stack
+
+ReactJs, ReactRouterDOM, NodeSass, Lodash, Dotenv, MaterialUI, MaterializeCSS, React testing-library
+
+
+## Authors
+
+- [@McArrow](https://mcarrow.vercel.app/)
+
